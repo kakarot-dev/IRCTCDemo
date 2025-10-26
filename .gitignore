@@ -1,0 +1,18 @@
+# Compiled class files
+*.class
+
+# Log files
+logs/
+*.log
+
+# IDE files
+.idea/
+.vscode/
+*.iml
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Claude Code
+.claude/
