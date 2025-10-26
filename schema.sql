@@ -1,17 +1,12 @@
--- Drop existing tables
-DROP TABLE IF EXISTS bookings;
-DROP TABLE IF EXISTS trains;
-DROP TABLE IF EXISTS users;
-
--- Create users table
-CREATE TABLE users (
+-- Create users table (only if not exists)
+CREATE TABLE IF NOT EXISTS users (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     name VARCHAR(100) UNIQUE NOT NULL,
     password VARCHAR(50) NOT NULL
 );
 
--- Create trains table
-CREATE TABLE trains (
+-- Create trains table (only if not exists)
+CREATE TABLE IF NOT EXISTS trains (
     train_id INT PRIMARY KEY AUTO_INCREMENT,
     train_number VARCHAR(10) UNIQUE NOT NULL,
     train_name VARCHAR(100) NOT NULL,
@@ -22,8 +17,8 @@ CREATE TABLE trains (
     departure_time VARCHAR(10)
 );
 
--- Create bookings table
-CREATE TABLE bookings (
+-- Create bookings table (only if not exists)
+CREATE TABLE IF NOT EXISTS bookings (
     booking_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     train_id INT NOT NULL,
@@ -38,8 +33,8 @@ CREATE TABLE bookings (
     FOREIGN KEY (train_id) REFERENCES trains(train_id)
 );
 
--- Insert trains with multiple options per popular route
-INSERT INTO trains (train_number, train_name, source, destination, total_seats, fare, departure_time) VALUES
+-- Insert sample trains
+INSERT IGNORE INTO trains (train_number, train_name, source, destination, total_seats, fare, departure_time) VALUES
 -- Delhi to Mumbai (4 trains)
 ('12301', 'Rajdhani Express', 'Delhi', 'Mumbai', 30, 1500.00, '06:00'),
 ('12951', 'Mumbai Rajdhani', 'Delhi', 'Mumbai', 30, 1550.00, '16:30'),
