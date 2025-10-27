@@ -8,11 +8,13 @@ public class Booking {
     private int seatNumber;
     private String seatType;
     private double fare;
+    private String travelDate;
     private String bookingDate;
     private String status;
     private String trainName;
     private String source;
     private String destination;
+    private String departureTime;
 
     public static final double PREMIUM_EXTRA = 500.0;
 
@@ -58,6 +60,12 @@ public class Booking {
 
     public String getDestination() { return destination; }
     public void setDestination(String destination) { this.destination = destination; }
+
+    public String getTravelDate() { return travelDate; }
+    public void setTravelDate(String travelDate) { this.travelDate = travelDate; }
+
+    public String getDepartureTime() { return departureTime; }
+    public void setDepartureTime(String departureTime) { this.departureTime = departureTime; }
 
     public static boolean isPremium(int seatNumber) {
         return seatNumber >= 1 && seatNumber <= 15;

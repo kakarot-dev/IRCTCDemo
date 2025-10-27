@@ -7,6 +7,8 @@ public class Train {
     private int totalSeats;
     private double fare;
     private String departureTime;
+    private String arrivalTime;
+    private String journeyDuration;
 
     // Getters and Setters
     public int getTrainId() { return trainId; }
@@ -32,6 +34,12 @@ public class Train {
 
     public String getDepartureTime() { return departureTime; }
     public void setDepartureTime(String departureTime) { this.departureTime = departureTime; }
+
+    public String getArrivalTime() { return arrivalTime; }
+    public void setArrivalTime(String arrivalTime) { this.arrivalTime = arrivalTime; }
+
+    public String getJourneyDuration() { return journeyDuration; }
+    public void setJourneyDuration(String journeyDuration) { this.journeyDuration = journeyDuration; }
 
     @Override
     public String toString() {

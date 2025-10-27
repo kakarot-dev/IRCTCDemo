@@ -95,6 +95,8 @@ public class DatabaseManager {
             t.setTotalSeats(rs.getInt("total_seats"));
             t.setFare(rs.getDouble("fare"));
             t.setDepartureTime(rs.getString("departure_time"));
+            t.setArrivalTime(rs.getString("arrival_time"));
+            t.setJourneyDuration(rs.getString("journey_duration"));
             trains.add(t);
         }
         return trains;
@@ -125,9 +127,9 @@ public class DatabaseManager {
         return seats;
     }
 
-    public boolean createBooking(int userId, int trainId, String name, int age, String gender, int seat, double fare) throws SQLException {
+    public boolean createBooking(int userId, int trainId, String name, int age, String gender, int seat, double fare, String travelDate) throws SQLException {
         PreparedStatement ps = conn.prepareStatement(
-            "INSERT INTO bookings (user_id, train_id, passenger_name, age, gender, seat_number, fare) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            "INSERT INTO bookings (user_id, train_id, passenger_name, age, gender, seat_number, fare, travel_date) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
         ps.setInt(1, userId);
         ps.setInt(2, trainId);
         ps.setString(3, name);
@@ -135,6 +137,7 @@ public class DatabaseManager {
         ps.setString(5, gender);
         ps.setInt(6, seat);
         ps.setDouble(7, fare);
+        ps.setString(8, travelDate);
         ps.executeUpdate();
         return true;
     }
@@ -143,7 +146,7 @@ public class DatabaseManager {
         List<Booking> bookings = new ArrayList<>();
         PreparedStatement ps = conn.prepareStatement(
             "SELECT b.*, t.train_name, t.train_number, t.source, t.destination, t.departure_time " +
-            "FROM bookings b JOIN trains t ON b.train_id = t.train_id WHERE b.user_id=? ORDER BY b.booking_date DESC");
+            "FROM bookings b JOIN trains t ON b.train_id = t.train_id WHERE b.user_id=? ORDER BY b.travel_date DESC, b.booking_date DESC");
         ps.setInt(1, userId);
         ResultSet rs = ps.executeQuery();
 
@@ -157,12 +160,14 @@ public class DatabaseManager {
             b.setGender(rs.getString("gender"));
             b.setSeatNumber(rs.getInt("seat_number"));
             b.setFare(rs.getDouble("fare"));
+            b.setTravelDate(rs.getString("travel_date"));
             b.setBookingDate(rs.getString("booking_date"));
             b.setStatus(rs.getString("status"));
             b.setSeatType(b.getSeatNumber() <= 15 ? "Premium" : "Regular");
             b.setTrainName(rs.getString("train_name"));
             b.setSource(rs.getString("source"));
             b.setDestination(rs.getString("destination"));
+            b.setDepartureTime(rs.getString("departure_time"));
             bookings.add(b);
         }
         return bookings;
