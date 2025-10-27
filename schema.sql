@@ -5,11 +5,8 @@ CREATE TABLE IF NOT EXISTS users (
     password VARCHAR(50) NOT NULL
 );
 
--- Drop and recreate trains table with new schema
-DROP TABLE IF EXISTS bookings;
-DROP TABLE IF EXISTS trains;
-
-CREATE TABLE trains (
+-- Create trains table (only if not exists)
+CREATE TABLE IF NOT EXISTS trains (
     train_id INT PRIMARY KEY AUTO_INCREMENT,
     train_number VARCHAR(10) UNIQUE NOT NULL,
     train_name VARCHAR(100) NOT NULL,
@@ -22,8 +19,8 @@ CREATE TABLE trains (
     journey_duration VARCHAR(10)
 );
 
--- Recreate bookings table with new schema
-CREATE TABLE bookings (
+-- Create bookings table (only if not exists)
+CREATE TABLE IF NOT EXISTS bookings (
     booking_id INT PRIMARY KEY AUTO_INCREMENT,
     user_id INT NOT NULL,
     train_id INT NOT NULL,
